@@ -28,19 +28,19 @@
 //        revealThirdPoint();
 //
 //     };
-//
-//window.onload = function() {
-//    
-//    if (window.innerHeight > 950) {
-//        animatePoints(pointsArray);
-//    }
-//
-//    window.addEventListener('scroll', function(event) {
-//        
-//        if (pointsArray[0].getBoundingClientRect().top <= 500) {
-//            animatePoints(pointsArray);
-//        }
-//                        
-//    });
-//    
-//};
+
+window.onload = function() {
+    
+    if (window.innerHeight > 950) {
+        animatePoints(pointsArray);
+    }
+
+    window.addEventListener('scroll', function(event) {
+        
+        if (pointsArray[0].getBoundingClientRect().top <= 500) {
+            animatePoints(pointsArray);
+        }
+                        
+    });
+    
+};
