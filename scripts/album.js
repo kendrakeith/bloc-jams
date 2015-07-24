@@ -1,4 +1,3 @@
-// Example Album
  var albumPicasso = {
      name: 'The Colors',
      artist: 'Pablo Picasso',
@@ -14,7 +13,6 @@
      ]
  };
  
-// Another Example Album
  var albumMarconi = {
      name: 'The Telephone',
      artist: 'Guglielmo Marconi',
@@ -29,8 +27,22 @@
          { name: 'Wrong phone number', length: '2:15'}
      ]
  };
- 
-//Dynamically Generate Song Row Content
+
+ var albumForest = {
+     name: 'Forest',
+     artist: 'The Trees',
+     label: 'Seed',
+     year: '2015',
+     albumArtUrl: 'assets/images/album_covers/05.png',
+     songs: [
+         { name: 'Oak', length: '1:01' },
+         { name: 'Spruce', length: '5:01' },
+         { name: 'Juniper', length: '2:21'},
+         { name: 'Birch', length: '4:14' },
+         { name: 'Pine', length: '3:15'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      
      var template =
@@ -40,30 +52,30 @@
       + '  <td class="song-item-duration">' + songLength + '</td>'
       + '</tr>'
       ;
- 
-     return $(template);
+    
+     return template;
  
  };
 
-//Set Current Album
  var setCurrentAlbum = function(album) {
  
-     var $albumTitle = $(".album-view-title");
-     var $albumArtist = $(".album-view-artist");
-     var $albumReleaseInfo = $(".album-view-release-info");
-     var $albumImage = $(".album-cover-art");
-     var $albumSongList = $(".album-view-song-list");
+     var albumTitle = document.getElementsByClassName('album-view-title')[0];
+     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+     var albumImage = document.getElementsByClassName('album-cover-art')[0];
+     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
  
-     $albumTitle.text(album.name);
-     $albumArtist.text(album.artist);
-     $albumReleaseInfo.text(album.year + ' ' + album.label);
-     $albumImage.attr('src', album.albumArtUrl);
+     albumTitle.firstChild.nodeValue = album.name;
+     albumArtist.firstChild.nodeValue = album.artist;
+     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
+     albumImage.setAttribute('src', album.albumArtUrl);
  
-     $albumSongList.empty();
+     albumSongList.innerHTML = '';
+     
+        console.log("This also seems to work");
  
      for (i = 0; i < album.songs.length; i++) {
-         var $newRow = createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
-         $albumSongList.append($newRow);
+         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
      }
  
  };
@@ -123,13 +135,27 @@ var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></
 
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 
-//State of Playing Songs
+var cover = document.getElementsByClassName("album-cover-art")[0];
+
 var currentlyPlayingSong = null;
 
 window.onload = function() {
    
      setCurrentAlbum(albumPicasso);
   
+     cover.addEventListener("click", function(event){
+        
+       var currentAlbum = document.getElementsByClassName('album-view-title')[0].firstChild.nodeValue;
+       
+           if ( currentAlbum == 'The Colors') {
+               setCurrentAlbum(albumMarconi);
+           } else  if ( currentAlbum == 'The Telephone'){
+               setCurrentAlbum(albumForest);
+           } else {
+               setCurrentAlbum(albumPicasso);
+           }
+     });
+    
      songListContainer.addEventListener('mouseover', function(event) {
      
         if (event.target.parentElement.className === 'album-view-song-item') {
