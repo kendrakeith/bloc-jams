@@ -41,42 +41,47 @@
       + '</tr>'
       ;
  
-     return $(template);
+     return template;
  
  };
 
 //Set Current Album
  var setCurrentAlbum = function(album) {
  
-     var $albumTitle = $(".album-view-title");
-     var $albumArtist = $(".album-view-artist");
-     var $albumReleaseInfo = $(".album-view-release-info");
-     var $albumImage = $(".album-cover-art");
-     var $albumSongList = $(".album-view-song-list");
+     var albumTitle = document.getElementsByClassName('album-view-title')[0];
+     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+     var albumImage = document.getElementsByClassName('album-cover-art')[0];
+     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
  
-     $albumTitle.text(album.name);
-     $albumArtist.text(album.artist);
-     $albumReleaseInfo.text(album.year + ' ' + album.label);
-     $albumImage.attr('src', album.albumArtUrl);
+     albumTitle.firstChild.nodeValue = album.name;
+     albumArtist.firstChild.nodeValue = album.artist;
+     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
+     albumImage.setAttribute('src', album.albumArtUrl);
  
-     $albumSongList.empty();
+     albumSongList.innerHTML = '';
  
      for (i = 0; i < album.songs.length; i++) {
-         var $newRow = createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
-         $albumSongList.append($newRow);
+         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
      }
  
  };
 
 var findParentByClassName = function(element, targetClass) {
 
-    var currentParent = element.parentElement;
-         
-    while (currentParent.className != targetClass) {
-        currentParent = currentParent.parentElement;
+    if (!currentParent) {
+        alert('No parent found');
+      
+    } else if (currentParent.className != targetClass){
+      
+      currentParent = currentParent.parentElement;
+      return currentParent;
+        
+    } else {
+      
+      alert('No parent found with that class name');
+        
     }
-    
-    return currentParent;
 };
 
 var getSongItem = function(element) {
@@ -157,3 +162,4 @@ window.onload = function() {
         });      
     }
 };
+
